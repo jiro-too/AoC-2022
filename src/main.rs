@@ -28,6 +28,6 @@ fn main() {
         day3::solve_part2(loadfile("/home/nolife/advent_of_code/advent3_part2.txt"))
     );
 
-    println!("DAY 1 SOLUTION: {}", (day4::solve(loadfile("advent4.txt"))));
+    println!("DAY 1 SOLUTION: {:?}", (day4::solve(loadfile("advent4.txt"))));
 
 }

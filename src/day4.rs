@@ -6,7 +6,7 @@ use std::ops::Range;
 fn range(a: &(u64, u64), b: &(u64, u64)) -> bool {
     return a.0 <= b.0 && a.1 >= b.1;
 }
-fn parse(input: &str) -> Vec<(std::ops::Range<u8>, std::ops::Range<u8>)> {
+fn parse(input: &str) -> Vec<(std::ops::Range<u64>, std::ops::Range<u64>)> {
     input
         .lines()
         .filter_map(|line| {
@@ -21,11 +21,15 @@ fn parse(input: &str) -> Vec<(std::ops::Range<u8>, std::ops::Range<u8>)> {
         .collect()
 }
 
-fn in_range(a: &Range<u8>, b: &Range<u8>) -> bool {
+fn in_range(a: &Range<u64>, b: &Range<u64>) -> bool {
     b.start >= a.start && b.end <= a.end
 }
 
-pub fn solve(buf: Option<String>) -> i128 {
+fn overlaps(a: &Range<u64>, b: &Range<u64>) -> bool {
+    (if a.start > b.start { a.start } else { b.start })
+        <= (if a.end < b.end { a.end } else { b.end })
+}
+pub fn solve(buf: Option<String>) -> (i128, i128) {
     let mut input: String = String::new();
     if let Some(str) = buf {
         input = str;
@@ -33,18 +37,25 @@ pub fn solve(buf: Option<String>) -> i128 {
         println!("Unable to load the file\n");
     }
 
-    let mut total:i128 = 0;
-    input
-        .lines()
-        .for_each(|line| 
-            {
-                let count = 
-                parse(line)
-                .iter()
-                .filter(|(a, b)| in_range(a, b) || in_range(b, a)).count();
+    let mut total_part1: i128 = 0;
+    let mut total_part2: i128 = 0;
+    input.lines().for_each(|line| {
+        let count = parse(line)
+            .iter()
+            .filter(|(a, b)| in_range(a, b) || in_range(b, a))
+            .count();
 
-                total+=count as i128;
-            });
+        total_part1 += count as i128;
+    });
 
-    total
+    input.lines().for_each(|line| {
+        let count = parse(line)
+            .iter()
+            .filter(|(a, b)| overlaps(a, b) || overlaps(b, a))
+            .count();
+
+        total_part2 += count as i128;
+    });
+
+    (total_part1, total_part2)
 }
