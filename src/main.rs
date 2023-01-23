@@ -2,6 +2,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day6;
 
 use std::{
     fs,
@@ -21,13 +22,20 @@ fn main() {
 
     println!("\nDay 2 solution(s): ");
     day2::solve(loadfile("advent2.txt"));
-
     println!(
         "\nDay 3 solution(s):\n\tPart 1 {}\n\tPart 2 {}",
         day3::solve_part1(loadfile("advent3.txt")),
-        day3::solve_part2(loadfile("/home/nolife/advent_of_code/advent3_part2.txt"))
+        day3::solve_part2(loadfile("/home/nolife/advent_of_code/advent3.txt"))
     );
 
-    println!("DAY 1 SOLUTION: {:?}", (day4::solve(loadfile("advent4.txt"))));
+    println!(
+        "\nDAY 4 SOLUTION: {:?}",
+        (day4::solve(loadfile("advent4.txt")))
+    );
 
+    println!(
+        "\nDAY 6 SOLUTION:\n\tPart 1: {:?}\n\tPart 2: {:?}",
+        (day6::solve_part1(loadfile("advent6.txt"))),
+        (day6::solve_part2(loadfile("advent6.txt")))
+    );
 }
